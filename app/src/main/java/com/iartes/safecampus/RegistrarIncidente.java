@@ -17,6 +17,11 @@ import android.widget.Toast;
 
 public class RegistrarIncidente extends AppCompatActivity {
     private Spinner spinner_categoria;
+    private EditText etData;
+    private EditText etHora;
+    private EditText etDescricao;
+    private TextView latitude;
+    private TextView longitude;
     private String data;
     private String hora;
     private String descricao;
@@ -31,12 +36,11 @@ public class RegistrarIncidente extends AppCompatActivity {
 
         criarDropDown();
 
-        EditText etData = findViewById(R.id.etData);
-        EditText etHora = findViewById(R.id.etHora);
-        EditText etDescricao = findViewById(R.id.etDescricao);
-        Spinner sp = findViewById(R.id.spinnerCategoria);
-        TextView latitude = findViewById(R.id.tvLatitude);
-        TextView longitude = findViewById(R.id.tvLongitude);
+        etData = findViewById(R.id.etData);
+        etHora = findViewById(R.id.etHora);
+        etDescricao = findViewById(R.id.etDescricao);
+        latitude = findViewById(R.id.tvLatitude);
+        longitude = findViewById(R.id.tvLongitude);
 
         etData.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,7 +92,7 @@ public class RegistrarIncidente extends AppCompatActivity {
             }
         });
 
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_categoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 // Atualizar a variável categoriaIndex quando o usuário selecionar uma opção no Spinner
@@ -100,38 +104,12 @@ public class RegistrarIncidente extends AppCompatActivity {
             }
         });
 
-//        if (savedInstanceState != null) {
-//            // Restaurar os dados do formulário do Bundle
-//            data = savedInstanceState.getString("data");
-//            hora = savedInstanceState.getString("hora");
-//            descricao = savedInstanceState.getString("descricao");
-//            categoriaIndex = savedInstanceState.getInt("categoria");
-//
-//            Log.d(TAG, "Primeiro fluxo de execução do if");
-//            Log.d(TAG, "Data: " + data);
-//            Log.d(TAG, "Hora: " + hora);
-//            Log.d(TAG, "Descrição: " + descricao);
-//            Log.d(TAG, "categoria: " + categoriaIndex);
-//
-//            etData.setText(data);
-//            etHora.setText(hora);
-//            etDescricao.setText(descricao);
-//            sp.setSelection(categoriaIndex);
-//        } else {
-//            Log.d(TAG, "Segundo fluxo de execução do if");
-//            Log.d(TAG, "Data: " + data);
-//            Log.d(TAG, "Hora: " + hora);
-//            Log.d(TAG, "Descrição: " + descricao);
-//            Log.d(TAG, "categoria: " + categoriaIndex);
-//        }
-
         Intent intentRecv = getIntent();
 
         etData.setText(intentRecv.getStringExtra("data"));
         etHora.setText(intentRecv.getStringExtra("hora"));
         etDescricao.setText(intentRecv.getStringExtra("descricao"));
-
-
+        spinner_categoria.setSelection(intentRecv.getIntExtra("categoria", 0));
         latitude.setText("Latitude: " + intentRecv.getDoubleExtra("latitudeValue", 0.0));
         longitude.setText("Longitude: " + intentRecv.getDoubleExtra("longitudeValue", 0.0));
     }
@@ -142,23 +120,6 @@ public class RegistrarIncidente extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_categoria.setAdapter(adapter);
     }
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        // Salvar os dados do formulário no Bundle
-//        Log.d(TAG, "Salvando os dados");
-//        Log.d(TAG, "Data: " + data);
-//        Log.d(TAG, "Hora: " + hora);
-//        Log.d(TAG, "Descrição: " + descricao);
-//        Log.d(TAG, "categoria: " + categoriaIndex);
-//
-//        outState.putString("data", data);
-//        outState.putString("hora", hora);
-//        outState.putString("descricao", descricao);
-//        outState.putInt("categoria", categoriaIndex);
-//    }
 
     public void irParaMapa(View view) {
         // Salvar os dados do formulário no Bundle

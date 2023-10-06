@@ -138,7 +138,10 @@ public class RegistrarLocalizacao extends AppCompatActivity {
 
         // Capturar intents da tela anterior
         Intent intentRecv = getIntent();
-
+        data = intentRecv.getStringExtra("data");
+        hora = intentRecv.getStringExtra("hora");
+        descricao = intentRecv.getStringExtra("descricao");
+        categoriaIndex = intentRecv.getIntExtra("categoria", 0);
     }
 
     public void irParaFormulario(View view) {
@@ -151,6 +154,10 @@ public class RegistrarLocalizacao extends AppCompatActivity {
                     double longitude = localizacaoEscolhida.getLongitude();
 
                     Intent intent = new Intent(RegistrarLocalizacao.this, RegistrarIncidente.class);
+                    intent.putExtra("data", data);
+                    intent.putExtra("hora", hora);
+                    intent.putExtra("descricao", descricao);
+                    intent.putExtra("categoria", categoriaIndex);
                     intent.putExtra("latitudeValue", latitude);
                     intent.putExtra("longitudeValue", longitude);
                     startActivity(intent);

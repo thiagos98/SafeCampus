@@ -22,12 +22,6 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Menu.this, RegistrarIncidente.class);
-                Toast toast = Toast.makeText(
-                        getApplicationContext(),
-                        "Vai para a tela de registrar incidente",
-                        Toast.LENGTH_LONG
-                );
-                toast.show();
                 startActivity(intent);
             }
         });
