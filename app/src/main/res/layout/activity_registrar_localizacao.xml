@@ -21,12 +21,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="142dp"
+        android:onClick="irParaFormulario"
         android:text="Registrar localização"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map"
-        android:onClick="irParaMapa"/>
+        />
 
     <TextView
         android:id="@+id/textView"

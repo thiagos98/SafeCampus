@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieImageAsset;
@@ -18,10 +19,8 @@ public class Splash extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        // Crie um Handler associado ao Activity atual
         Handler handler = new Handler();
 
-// Poste o Runnable no Handler
         handler.postDelayed(new Runnable() {
 
             @Override
@@ -34,7 +33,7 @@ public class Splash extends AppCompatActivity {
 
     private void irParaProximoActivity()
     {
-        Intent intent = new Intent(Splash.this, MainActivity.class);
+        Intent intent = new Intent(Splash.this, Menu.class);
         startActivity(intent);
     }
 }

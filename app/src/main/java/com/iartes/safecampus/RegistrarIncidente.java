@@ -13,11 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegistrarIncidente extends AppCompatActivity {
     private Spinner spinner_categoria;
-    private TextView latitude;
-    private TextView longitude;
+    private String data;
+    private String hora;
+    private String descricao;
+    private int categoriaIndex;
+
+    private static String TAG = "CAOS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +30,110 @@ public class RegistrarIncidente extends AppCompatActivity {
         setContentView(R.layout.activity_registrar_incidente);
 
         criarDropDown();
-        salvarDadosFormulario();
 
-        // Recupera os dados do formulário do Bundle
-//        Bundle savedInstanceStateMethod = getIntent().getExtras();
-//        preencherFormulario(savedInstanceStateMethod);
+        EditText etData = findViewById(R.id.etData);
+        EditText etHora = findViewById(R.id.etHora);
+        EditText etDescricao = findViewById(R.id.etDescricao);
+        Spinner sp = findViewById(R.id.spinnerCategoria);
+        TextView latitude = findViewById(R.id.tvLatitude);
+        TextView longitude = findViewById(R.id.tvLongitude);
+
+        etData.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Atualizar a variável data toda vez que o texto no EditText for alterado
+                data = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        etHora.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Este método não é utilizado neste caso
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Atualizar a variável hora toda vez que o texto no EditText for alterado
+                hora = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Este método não é utilizado neste caso
+            }
+        });
+
+        etDescricao.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Atualizar a variável descricao toda vez que o texto no EditText for alterado
+                descricao = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                // Atualizar a variável categoriaIndex quando o usuário selecionar uma opção no Spinner
+                categoriaIndex = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+//        if (savedInstanceState != null) {
+//            // Restaurar os dados do formulário do Bundle
+//            data = savedInstanceState.getString("data");
+//            hora = savedInstanceState.getString("hora");
+//            descricao = savedInstanceState.getString("descricao");
+//            categoriaIndex = savedInstanceState.getInt("categoria");
+//
+//            Log.d(TAG, "Primeiro fluxo de execução do if");
+//            Log.d(TAG, "Data: " + data);
+//            Log.d(TAG, "Hora: " + hora);
+//            Log.d(TAG, "Descrição: " + descricao);
+//            Log.d(TAG, "categoria: " + categoriaIndex);
+//
+//            etData.setText(data);
+//            etHora.setText(hora);
+//            etDescricao.setText(descricao);
+//            sp.setSelection(categoriaIndex);
+//        } else {
+//            Log.d(TAG, "Segundo fluxo de execução do if");
+//            Log.d(TAG, "Data: " + data);
+//            Log.d(TAG, "Hora: " + hora);
+//            Log.d(TAG, "Descrição: " + descricao);
+//            Log.d(TAG, "categoria: " + categoriaIndex);
+//        }
+
+        Intent intentRecv = getIntent();
+
+        etData.setText(intentRecv.getStringExtra("data"));
+        etHora.setText(intentRecv.getStringExtra("hora"));
+        etDescricao.setText(intentRecv.getStringExtra("descricao"));
+
+
+        latitude.setText("Latitude: " + intentRecv.getDoubleExtra("latitudeValue", 0.0));
+        longitude.setText("Longitude: " + intentRecv.getDoubleExtra("longitudeValue", 0.0));
     }
 
     public void criarDropDown() {
@@ -39,60 +143,36 @@ public class RegistrarIncidente extends AppCompatActivity {
         spinner_categoria.setAdapter(adapter);
     }
 
-    public void salvarDadosFormulario() {
-        Bundle outState = new Bundle();
-
-        EditText etData = findViewById(R.id.etData);
-        outState.putString("data", etData.getText().toString());
-
-        EditText etHora = findViewById(R.id.etHora);
-        outState.putString("hora", etHora.getText().toString());
-
-        EditText etDescricao = findViewById(R.id.etDescricao);
-        outState.putString("descricao", etDescricao.getText().toString());
-
-        Spinner sp = findViewById(R.id.spinnerCategoria);
-        int categoriaIndex = sp.getSelectedItemPosition();
-        outState.putInt("categoria", categoriaIndex);
-
-        super.onSaveInstanceState(outState);
-    }
-
-    public void preencherFormulario(Bundle savedInstanceStateMethod) {
-        EditText etData = findViewById(R.id.etData);
-        etData.setText(savedInstanceStateMethod.getString("data"));
-
-        EditText etHora = findViewById(R.id.etHora);
-        etHora.setText(savedInstanceStateMethod.getString("hora"));
-
-        EditText etDescricao = findViewById(R.id.etDescricao);
-        etDescricao.setText(savedInstanceStateMethod.getString("descricao"));
-
-        Spinner sp = findViewById(R.id.spinnerCategoria);
-        int categoriaIndex = savedInstanceStateMethod.getInt("categoria");
-        sp.setSelection(categoriaIndex);
-    }
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        // Salvar os dados do formulário no Bundle
+//        Log.d(TAG, "Salvando os dados");
+//        Log.d(TAG, "Data: " + data);
+//        Log.d(TAG, "Hora: " + hora);
+//        Log.d(TAG, "Descrição: " + descricao);
+//        Log.d(TAG, "categoria: " + categoriaIndex);
+//
+//        outState.putString("data", data);
+//        outState.putString("hora", hora);
+//        outState.putString("descricao", descricao);
+//        outState.putInt("categoria", categoriaIndex);
+//    }
 
     public void irParaMapa(View view) {
+        // Salvar os dados do formulário no Bundle
+        Log.d(TAG, "Salvando os dados");
+        Log.d(TAG, "Data: " + data);
+        Log.d(TAG, "Hora: " + hora);
+        Log.d(TAG, "Descrição: " + descricao);
+        Log.d(TAG, "categoria: " + categoriaIndex);
 
         Intent intent = new Intent(this, RegistrarLocalizacao.class);
-
-        startActivityForResult(intent, 1);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Verifica o resultado da nova activity
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Faz algo com o resultado
-            latitude = findViewById(R.id.tvLatitude);
-            longitude = findViewById(R.id.tvLongitude);
-            Intent intent = getIntent();
-            Log.d("DEBUG", "Latitude " + intent.getStringExtra("latitude"));
-            latitude.setText("Latitude: " + intent.getStringExtra("latitude"));
-            longitude.setText("Longitude: " + intent.getStringExtra("longitude"));
-        }
+        intent.putExtra("data", data);
+        intent.putExtra("hora", hora);
+        intent.putExtra("descricao", descricao);
+        intent.putExtra("categoria", categoriaIndex);
+        startActivity(intent);
     }
 }
