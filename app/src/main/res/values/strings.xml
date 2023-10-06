@@ -1,1 +1,10 @@
-<resources></resources>
+<resources>
+    <string name="app_name">SafeCampus</string>
+    <string-array name="categorias">
+        <item>Vias</item>
+        <item>Iluminação</item>
+        <item>Furto</item>
+        <item>Roubo</item>
+    </string-array>
+    <string name="titulo">Registrar incidente</string>
+</resources>
