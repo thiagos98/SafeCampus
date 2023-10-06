@@ -32,6 +32,12 @@ public class RegistrarLocalizacao extends AppCompatActivity {
     private GeoPoint localizacaoEscolhida;
     private Button salvarLocalizacao;
 
+    // Dados do formulário
+    private String data;
+    private String hora;
+    private String descricao;
+    private int categoriaIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,21 +135,35 @@ public class RegistrarLocalizacao extends AppCompatActivity {
         //adiciona esse callback de eventos ao mapa
         MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(mReceive);
         mapa.getOverlays().add(0, mapEventsOverlay);
+
+        // Capturar intents da tela anterior
+        Intent intentRecv = getIntent();
+        data = intentRecv.getStringExtra("data");
+        hora = intentRecv.getStringExtra("hora");
+        descricao = intentRecv.getStringExtra("descricao");
+        categoriaIndex = intentRecv.getIntExtra("categoria", 0);
     }
 
-    public void irParaFormulario() {
-        //eventos do botao salvar
+    public void irParaFormulario(View view) {
         salvarLocalizacao = (Button) findViewById(R.id.buttonLocalizacao);
+        salvarLocalizacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (localizacaoEscolhida != null) {
+                    double latitude = localizacaoEscolhida.getLatitude();
+                    double longitude = localizacaoEscolhida.getLongitude();
 
-        if (localizacaoEscolhida != null) {
-            double latitude = localizacaoEscolhida.getLatitude();
-            double longitude = localizacaoEscolhida.getLongitude();
-
-            Intent intent = new Intent(this, RegistrarIncidente.class);
-            intent.putExtra("latitude", latitude);
-            intent.putExtra("longitude", longitude);
-            startActivity(intent);
-        }
+                    Intent intent = new Intent(RegistrarLocalizacao.this, RegistrarIncidente.class);
+                    intent.putExtra("data", data);
+                    intent.putExtra("hora", hora);
+                    intent.putExtra("descricao", descricao);
+                    intent.putExtra("categoria", categoriaIndex);
+                    intent.putExtra("latitudeValue", latitude);
+                    intent.putExtra("longitudeValue", longitude);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".Menu">
 
     <TextView
         android:id="@+id/textView2"
@@ -31,7 +31,7 @@
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewRegistrarIncidente"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_app_registration_24" />
 
@@ -94,19 +94,21 @@
         android:layout_marginBottom="188dp"
         android:text="REGISTRAR INCIDENTE"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewRegistrarIncidente"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewRegistrarIncidente"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="15dp"
+        android:contentDescription="Ir para tela de registrar incidente"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:srcCompat="@drawable/baseline_dangerous_24" />
+        app:srcCompat="@drawable/baseline_dangerous_24"
+        android:onClick="irParaRegistrarIncidente"/>
 
     <ImageView
         android:id="@+id/imageView3"
