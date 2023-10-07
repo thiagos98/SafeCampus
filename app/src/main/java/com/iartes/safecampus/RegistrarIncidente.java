@@ -3,6 +3,7 @@ package com.iartes.safecampus;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -136,4 +137,28 @@ public class RegistrarIncidente extends AppCompatActivity {
         intent.putExtra("categoria", categoriaIndex);
         startActivity(intent);
     }
+
+    public void registrarIncidente(View view) {
+        DBHelper bdSafeCampus = new DBHelper(getApplicationContext());
+        String categoria = spinner_categoria.getItemAtPosition(categoriaIndex).toString();
+
+        try {
+            String lat = latitude.getText().toString();
+            String lon = longitude.getText().toString();
+
+            bdSafeCampus.inserirIncidente(data, hora, descricao, categoria, lat, lon);
+            Log.i(TAG, "Dados inseridos no banco de dados");
+
+            bdSafeCampus.close();
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Erro ao converter latitude ou longitude", e);
+        } catch (SQLException e) {
+            Log.e(TAG, "Erro ao inserir dados no banco de dados", e);
+        }
+
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

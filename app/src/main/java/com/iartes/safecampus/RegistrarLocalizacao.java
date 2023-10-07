@@ -161,6 +161,7 @@ public class RegistrarLocalizacao extends AppCompatActivity {
                     intent.putExtra("latitudeValue", latitude);
                     intent.putExtra("longitudeValue", longitude);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

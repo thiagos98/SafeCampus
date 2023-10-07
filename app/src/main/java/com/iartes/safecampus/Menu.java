@@ -23,6 +23,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Menu.this, RegistrarIncidente.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
